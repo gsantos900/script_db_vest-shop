@@ -60,3 +60,22 @@ SELECT * FROM pedido;
 
 INSERT INTO pedido (id_comprador, valor_subtotal, valor_frete, insento_frete, cep_destino, regiao_metropolitana, status, data_pedido) VALUES ('', '', '', '', '', '', '', '', '', '', '');
 
+CREATE TABLE notificacao_sistema(
+
+ id_notificacao SERIAL PRIMARY KEY,
+
+ id_usuario               int not null,
+ tipo_notificacao         varchar(50) not null,
+ titulo                   varchar(150) not null,
+ mensagem                 text not null,
+ canal                    varchar(20) not null,
+ status                   status_notificacao_enum not null, 
+ opt_out_respeitado       boolean
+ data_envio               timestamp
+);
+
+SELECT * FROM notificacao_sistema;
+
+INSERT INTO notificacao_sistema (id_usuario, tipo_notificacao,  titulo, mensagem, canal, status, data_envio) VALUES ('', '', '', '', '', '', '', '', '', '', '');
+
+
