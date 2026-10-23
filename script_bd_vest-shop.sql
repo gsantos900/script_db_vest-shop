@@ -120,3 +120,16 @@ SELECT*FROM item_pedido
 
 INSERT INTO item_pedido(id_pedido, id_produto)VALUES ('', '', '', '', '');
 
+CREATE TABLE log_auditoria_banimento (
+  id_log SERIAL PRIMARY KEY,
+  id_anunciante_banido                    INT not null,
+  id_gestor_responsavel                   INT not null,
+  motivo_banimento                        INT not null,
+  quantidade_evidencias_confirmadas       INT not null,
+  saldo_retido_ressarcimento              DECIMAL(10,2),
+  data_ultima_atualizacao                 timestamp
+);
+SELECT*FROM log_auditoria_banimento
+
+
+INSERT INTO log_auditoria_banimento(id_anunciante_banido, id_gestor_responsavel, data_ultima_atualizacao)VALUES ('', '', '', '', '');
