@@ -78,4 +78,17 @@ SELECT * FROM notificacao_sistema;
 
 INSERT INTO notificacao_sistema (id_usuario, tipo_notificacao,  titulo, mensagem, canal, status, data_envio) VALUES ('', '', '', '', '', '', '', '', '', '', '');
 
+CREATE TABLE denuncia_produto( 
+  id_denuncia_produto SERIAL PRIMARY KEY, 
+   fk_produto int,
+   id_denuncia int,
+   motivo_denuncia text,
+   evidencia_url varchar(255),
+   status varchar(255),
+   data_denuncia timestamp
+);
+
+SELECT * FROM denuncia_produto;
+
+INSERT INTO denuncia_produto(fk_produto, id_denuncia, motivo_denuncia,  evidencia_url, status, data_denuncia) VALUES ('', '', '', '', '', '', '');
 
