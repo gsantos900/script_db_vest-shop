@@ -17,15 +17,19 @@ CREATE TABLE usuario(
 SELECT * FROM usuario;
 
 
-INSERT INTO usuario (nome, email, senha_hash, data_nascimento, eh_maior_idade, participa_programa_fidelidade, data_cadastro) VALUES ('Gabriel', 'Gabriel@gmail.com', '12345678945987#@%098', '07/04/2000', 'sim', 'sim', '08/12/2024');
+INSERT INTO usuario (nome, email, senha_hash, data_nascimento, eh_maior_idade, tipo_perfil, tipo_notificacao, participa_programa_fidelidade, data_cadastro) VALUES ('Gabriel', 'Gabriel@gmail.com', '12345678945987#@%098', '2000/07/04', 'true', 'admim', 'sms', 'false', '2020/05/03');
+
+INSERT INTO usuario (nome, email, senha_hash, data_nascimento, eh_maior_idade, tipo_perfil, tipo_notificacao, participa_programa_fidelidade, data_cadastro) VALUES ('isabely', 'isbelly@gmail.com', '032678962@#$', '2000/07/04', 'true', 'cliente' 'sms', 'true', '2021/03/02');
+
+INSERT INTO usuario (nome, email, senha_hash, data_nascimento, eh_maior_idade, tipo_perfil, tipo_notificacao, participa_programa_fidelidade, data_cadastro) VALUES ('pedro', 'pedro@gmail.com', '9843659034557', '2000/07/04', 'true', 'cliente', 'sms', 'true', '2022/12/22');
 
 CREATE TABLE produto(
 
   id_produto SERIAL PRIMARY KEY,
 
-  id_anunciante   int not null,
-  nome     varchar(150) not null,
-  marca    varchar(100) not null,
+  id_anunciante         int not null,
+  nome                  varchar(150) not null,
+  marca                 varchar(100) not null,
   descricao             text,
   tamanho               varchar(10) not null,
   genero_indicado       varchar(20),
@@ -39,7 +43,11 @@ CREATE TABLE produto(
 
 SELECT * FROM produto;
 
-INSERT INTO produto (nome, id_anunciante, marca, descricao, tamanho, genero_indicado, estilo, preco_base_brl, quantidade_estoque, status, data_cadastro) VALUES ('Gabriel', '112345678', 'nike', 'gosto da nike', 'M', 'masculino', 'radical', 'R$100.00', '20', 'valioso', '2026/05/30');
+INSERT INTO produto (nome, marca, tamanho, genero_indicado, estilo, preco_base_brl, quantidade_estoque, status) VALUES ('Arthur Renato Lima', '', '', '', '', '', '', '', '');
+
+INSERT INTO produto (nome, marca, tamanho, genero_indicado, estilo, preco_base_brl, quantidade_estoque, status) VALUES ('Flávia Valentina da Silva', '', '', '', '', '', '', '', '');
+
+INSERT INTO produto (nome, marca, tamanho, genero_indicado, estilo, preco_base_brl, quantidade_estoque, status) VALUES ('Thomas Breno Nathan de Paula', '', '', '', '', '', '', '', '');
 
 CREATE TABLE pedido(
 
@@ -58,39 +66,51 @@ CREATE TABLE pedido(
 
 SELECT * FROM pedido;
 
-INSERT INTO pedido (id_comprador, valor_subtotal, valor_frete, insento_frete, cep_destino, regiao_metropolitana, status, data_pedido) VALUES ('', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO pedido (codigo_moeda_utilizada, valor_subtotal, valor_frete, cep_destino, status, isento_frete, regiao_metropolitana, data_pedido) VALUES ('R$', '100.00', '14.00', '68928-048', 'Saiu para Entrega', 'true', 'false', '2022/12/04');
+
+INSERT INTO pedido (codigo_moeda_utilizada, valor_subtotal, valor_frete, cep_destino, status, isento_frete, regiao_metropolitana, data_pedido) VALUES ('R$', '100.00', '17.00', '39804-242', 'Entregue', 'true', 'true', '2023/02/10');
+
+INSERT INTO pedido (codigo_moeda_utilizada, valor_subtotal, valor_frete, cep_destino, status, isento_frete, regiao_metropolitana, data_pedido) VALUES ('R$', '100.00', '19.00', '67429-343', 'Enviado / Em Trânsito', 'false', 'false', '2024/05/03');
 
 CREATE TABLE notificacao_sistema(
 
  id_notificacao SERIAL PRIMARY KEY,
 
- id_usuario               int not null,
+ fk_usuario               int not null,
  tipo_notificacao         varchar(50) not null,
  titulo                   varchar(150) not null,
  mensagem                 text not null,
  canal                    varchar(20) not null,
- status                   status_notificacao_enum not null, 
- opt_out_respeitado       boolean
+ status                   varchar(255) not null, 
+ opt_out_respeitado       boolean,
  data_envio               timestamp
 );
 
-SELECT * FROM notificacao_sistema;
+SELECT * FROM pedido;
 
-INSERT INTO notificacao_sistema (id_usuario, tipo_notificacao,  titulo, mensagem, canal, status, data_envio) VALUES ('', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO pedido (tipo_notificacao, titulo, mensagem, canal, status, opt_out_respeitado, data_envio) VALUES ('emergencia', 'O seu pagamento do pedido #1234 foi processado com sucesso.', 'Pagamento Aprovado', 'Relatórios semanais, faturas, redefinições de senha.', 'Senha Alterada', 'true', '2025/03/12');
+
+INSERT INTO pedido (tipo_notificacao, titulo, mensagem, canal, status, opt_out_respeitado, data_envio) VALUES ('emergencia', 'O seu pagamento do pedido #1234 foi processado com sucesso.', 'Pagamento Aprovado', 'Relatórios semanais, faturas, redefinições de senha.', 'Senha Alterada', 'true', '2025/03/12');
+
+INSERT INTO pedido (tipo_notificacao, titulo, mensagem, canal, status, opt_out_respeitado, data_envio) VALUES ('emergencia', 'O seu pagamento do pedido #1234 foi processado com sucesso.', 'Pagamento Aprovado', 'Relatórios semanais, faturas, redefinições de senha.', 'Senha Alterada', 'true', '2025/03/12');
 
 CREATE TABLE denuncia_produto( 
   id_denuncia_produto SERIAL PRIMARY KEY, 
-   fk_produto int,
-   id_denuncia int,
-   motivo_denuncia text,
-   evidencia_url varchar(255),
-   status varchar(255),
-   data_denuncia timestamp
+   fk_produto       int not null,
+   id_denuncia      int not null,
+   motivo_denuncia  text not null,
+   evidencia_url    varchar(255),
+   status           varchar(255) not null,
+   data_denuncia    timestamp
 );
 
 SELECT * FROM denuncia_produto;
 
-INSERT INTO denuncia_produto(fk_produto, id_denuncia, motivo_denuncia,  evidencia_url, status, data_denuncia) VALUES ('', '', '', '', '', '', '');
+INSERT INTO denuncia_produto(motivo_denuncia, evidencia_url, status, data_denuncia) VALUES ('fraude', 'fotos', 'falsifição', '2025/05/30');
+
+INSERT INTO denuncia_produto(motivo_denuncia, evidencia_url, status, data_denuncia) VALUES ('fraude', 'fotos', 'falsifição', '2025/05/30');
+
+INSERT INTO denuncia_produto(motivo_denuncia, evidencia_url, status, data_denuncia) VALUES ('fraude', 'fotos', 'falsifição', '2025/05/30');
 
 CREATE TABLE perfil_preferencias_cliente( 
   
@@ -106,7 +126,7 @@ CREATE TABLE perfil_preferencias_cliente(
   
 SELECT * FROM  perfil_preferencias_cliente;
 
-INSERT INTO perfil_preferencias_cliente( genero, faixa_etaria, estilo_predominante, tamanho_habitual,  estilo_preferencia, orcamento_medio, data_atualizacao) VALUES ('Masculino', '1.63', 'nike', '150.00', '05/03/2027',);
+INSERT INTO perfil_preferencias_cliente( genero, tamanho_habitual,  estilo_predominante, orcamento_medio,) VALUES ('-', '', '', '');
 
 CREATE TABLE item_pedido (
   id_item_pedido SERIAL PRIMARY KEY,
@@ -133,3 +153,8 @@ SELECT*FROM log_auditoria_banimento
 
 
 INSERT INTO log_auditoria_banimento(id_anunciante_banido, id_gestor_responsavel, data_ultima_atualizacao)VALUES ('', '', '', '', '');
+
+
+
+
+
